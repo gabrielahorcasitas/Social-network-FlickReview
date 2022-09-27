@@ -1,9 +1,11 @@
+/* eslint-disable max-len */
 import {
   collection, addDoc, serverTimestamp,
-  query, onSnapshot, orderBy, doc, deleteDoc, updateDoc
+  query, onSnapshot, orderBy, doc, deleteDoc, updateDoc,
 } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-firestore.js';
 import { getAuth } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
 import { db } from './config.js';
+import { addLikes } from './likes.js';
 
 const q = query(collection(db, 'reviews'), orderBy('timeOfPublication', 'desc'));
 
@@ -132,35 +134,32 @@ export const createReviewBox = () => {
       const pathDeleteVectorRemaster = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       pathDeleteVectorRemaster.setAttribute('d', 'M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3');
 
-      const heartVector = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      heartVector.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-      heartVector.classList.add('icon', 'icon-tabler', 'icon-tabler-heart');
-      heartVector.setAttribute('width', '24');
-      heartVector.setAttribute('heigth', '24');
-      heartVector.setAttribute('viewBox', '0 0 24 24');
-      heartVector.setAttribute('stroke-width', '1');
-      heartVector.setAttribute('stroke', '#FEFFF1');
-      heartVector.setAttribute('fill', 'none');
-      heartVector.setAttribute('stroke-linecap', 'round');
-      heartVector.setAttribute('stroke-linejoin', 'round');
+      const heartVector = document.createElement('img');
+      heartVector.setAttribute('class', 'outlineheart');
+      heartVector.src = './images/liked.png';
 
-      const pathHeartVector = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      pathHeartVector.setAttribute('stroke', 'none');
-      pathHeartVector.setAttribute('d', 'M0 0h24v24H0z');
-      pathHeartVector.setAttribute('fill', 'none');
+      const heartVectorLiked = document.createElement('img');
+      heartVectorLiked.setAttribute('class', 'icon-tabler-heart');
+      heartVectorLiked.src = './images/liked.png';
 
-      const pathTwoHeartVector = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-      pathTwoHeartVector.setAttribute('d', 'M19.5 13.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572');
+      heartVector.addEventListener('click', async () => {
+        const paintingButton = await addLikes(obj.data().likedBy, user.uid, obj.id);
+      });
+      heartVectorLiked.addEventListener('click', async () => {
+        const paintingButton = await addLikes(obj.data().likedBy, user.uid, obj.id);
+      });
 
-      //  Insert elements in article tag
-      heartVector.append(pathHeartVector, pathTwoHeartVector);
       if (obj.data().userId === user.uid) {
         editVector.append(pathEditVector, pathEditVectorTwo, pathEditVectorThree, lineForVector);
         deleteVector.append(pathDeleteVector, lineForTrash, lineForTrashTwo, lineForTrashThree, pathDeleteVectorRedux, pathDeleteVectorRemaster);
         deleteVector.addEventListener('click', () => {
           const deleteMessageDiv = document.createElement('div');
           deleteMessageDiv.setAttribute('class', 'deleteMessageBox');
-          articlePublishedReview.insertBefore(deleteMessageDiv, heartVector);
+          if (obj.data().likedBy.includes(user.uid)) {
+            articlePublishedReview.insertBefore(deleteMessageDiv, heartVectorLiked);
+          } else {
+            articlePublishedReview.insertBefore(deleteMessageDiv, heartVector);
+          }
 
           const confirmDeleteMessage = document.createElement('p');
           confirmDeleteMessage.innerHTML = 'Are you sure you want delete this post? This action is permanent';
@@ -180,24 +179,25 @@ export const createReviewBox = () => {
 
           deleteButtonsDiv.append(permanentelyDelete, cancelDeleteButton);
           deleteMessageDiv.append(confirmDeleteMessage, deleteButtonsDiv);
+          generalInfoDiv.removeChild(deleteVector);
+          generalInfoDiv.removeChild(editVector);
 
           permanentelyDelete.addEventListener('click', async () => {
-          await deleteDoc(doc(db, 'reviews', obj.id));
+            await deleteDoc(doc(db, 'reviews', obj.id));
           });
 
           cancelDeleteButton.addEventListener('click', () => {
             deleteMessageDiv.removeChild(confirmDeleteMessage);
             deleteMessageDiv.removeChild(deleteButtonsDiv);
+            generalInfoDiv.append(editVector, deleteVector);
           });
         });
 
         editVector.addEventListener('click', async () => {
           const editReviewInput = document.createElement('textarea');
           editReviewInput.setAttribute('class', 'typeReviewEdit');
+          editReviewInput.setAttribute('maxlength', '700');
           editReviewInput.innerHTML = await `${obj.data().review}`;
-
-          articlePublishedReview.insertBefore(editReviewInput, heartVector);
-          articlePublishedReview.removeChild(paragraphReview);
 
           const editionButtonsDiv = document.createElement('div');
           editionButtonsDiv.setAttribute('class', 'editionDiv');
@@ -210,26 +210,50 @@ export const createReviewBox = () => {
           cancelEditButton.setAttribute('class', 'cancelEdition');
           cancelEditButton.innerHTML = 'Cancel';
 
+          if (obj.data().likedBy.includes(user.uid)) {
+            articlePublishedReview.insertBefore(editReviewInput, heartVectorLiked);
+            editionButtonsDiv.append(saveEditButton, cancelEditButton);
+            articlePublishedReview.insertBefore(editionButtonsDiv, heartVectorLiked);
+            generalInfoDiv.removeChild(editVector);
+          } else {
+            articlePublishedReview.insertBefore(editReviewInput, heartVector);
+            editionButtonsDiv.append(saveEditButton, cancelEditButton);
+            articlePublishedReview.insertBefore(editionButtonsDiv, heartVector);
+            generalInfoDiv.removeChild(editVector);
+          }
+
+          articlePublishedReview.removeChild(paragraphReview);
+          generalInfoDiv.removeChild(deleteVector);
           editionButtonsDiv.append(saveEditButton, cancelEditButton);
-          articlePublishedReview.insertBefore(editionButtonsDiv, heartVector);
 
           saveEditButton.addEventListener('click', async () => {
             const documentToEdit = (doc(db, 'reviews', obj.id));
             await updateDoc(documentToEdit, {
               review: editReviewInput.value,
             });
+            generalInfoDiv.append(editVector, deleteVector);
           });
 
           cancelEditButton.addEventListener('click', () => {
-            articlePublishedReview.insertBefore(paragraphReview, heartVector);
+            if (obj.data().likedBy.includes(user.uid)) {
+              articlePublishedReview.insertBefore(paragraphReview, heartVectorLiked);
+            } else {
+              articlePublishedReview.insertBefore(paragraphReview, heartVector);
+            }
             articlePublishedReview.removeChild(editReviewInput);
             articlePublishedReview.removeChild(editionButtonsDiv);
+            generalInfoDiv.append(editVector, deleteVector);
           });
         });
       }
       userMovieInfo.append(userName, movieName);
       generalInfoDiv.append(userImage, userMovieInfo, editVector, deleteVector);
-      articlePublishedReview.append(generalInfoDiv, paragraphReview, heartVector);
+      articlePublishedReview.append(generalInfoDiv, paragraphReview);
+      if (obj.data().likedBy.includes(user.uid)) {
+        articlePublishedReview.append(heartVectorLiked);
+      } else {
+        articlePublishedReview.append(heartVector);
+      }
 
       content.append(articlePublishedReview);
     });
