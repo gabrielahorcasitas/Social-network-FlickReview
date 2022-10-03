@@ -1,5 +1,8 @@
+/* eslint-disable max-len */
+/* eslint-disable no-shadow */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable no-undef */
-import { getAuth, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
+import { getAuth, signOut, onAuthStateChanged } from '../importsFromFirebase.js';
 import { onNavigate } from '../main.js';
 import {
   messageDisplayError, cleaningReviewBox, removeErrorMessage, countingChars,
@@ -100,11 +103,10 @@ export const home = () => {
 
   btnLogOutHome.addEventListener('click', () => {
     signOut(auth).then(() => {
-      // Sign-out successful
-    }).catch((error) => {
-      // An error happened.
+      onNavigate('/');
+    }).catch(() => {
+      onNavigate('/home');
     });
-    onNavigate('/');
   });
 
   (async () => {

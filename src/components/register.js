@@ -1,7 +1,9 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/no-unresolved */
 /* eslint-disable max-len */
 import {
-  getAuth, createUserWithEmailAndPassword, sendEmailVerification, GoogleAuthProvider, signInWithPopup, updateProfile,
-} from 'https://www.gstatic.com/firebasejs/9.9.3/firebase-auth.js';
+  getAuth, createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateProfile,
+} from '../importsFromFirebase.js';
 import { onNavigate } from '../main.js';
 import { registerValidation, removeErrorMessage, messageDisplayError } from '../lib/general.js';
 
@@ -136,12 +138,9 @@ export const register = () => {
     if (validation === false) {
       setTimeout(removeErrorMessage, 3000);
     } else {
-      // Authentication New user
       const auth = getAuth();
       createUserWithEmailAndPassword(auth, inputEmailSection.value, createPasswordSection.value)
         .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
           if (createUsernameSection.value !== '') {
             updateProfile(auth.currentUser, {
               displayName: createUsernameSection.value,
@@ -165,23 +164,14 @@ export const register = () => {
     const auth = getAuth();
     signInWithPopup(auth, provider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
         const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        console.log(token);
-        // The signed-in user info.
-        const user = result.user;
         onNavigate('/home');
         // ...
       }).catch((error) => {
-        // Handle Errors here.
         const errorCode = error.code;
         const errorMessage = error.message;
-        // The email of the user's account used.
         const email = error.customData.email;
-        // The AuthCredential type that was used.
         const credential = GoogleAuthProvider.credentialFromError(error);
-        // ...
       });
   });
 
