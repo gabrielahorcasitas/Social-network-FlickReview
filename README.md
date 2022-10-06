@@ -37,6 +37,8 @@ en una sala de cine. Tonos vibrantes como el rosa y el azul que hacen juego con 
 Se llevaron a cabo prototipados de baja fidelidad en photoshop y alta fidelidad en figma para las secciones de inicio de sesión (log in), 
 registro (register) y página principal (home).
 
+A continuación presentamos uno de los prototipos de baja fidelidad de la vista de inicio de sesión y posteriormente dos prototipos de alta fidelidad de la sección de registro y home respectivamente.
+
 ![Prototipo de baja fidelidad de log in](src/images/PROTOTIPO_DE_BAJA_FIDELIDAD_Mesa_de_trabajo_1.jpg)
 
 ![Prototipo de alta fidelidad de register](src/images/register.PNG)
@@ -69,7 +71,15 @@ Después se realizaron pruebas para crear publicaciones una vez que el usuario i
 
 [Aquí](https://drive.google.com/drive/folders/1ITEjvpeOtdn4RiyqYyzLB0EfyTRORURy?usp=sharing) pueden consultarse los registros.
 
+## 6. Pruebas Unitarias
 
+En este proyecto nos introducimos al testeo a partir de la creación de data mocks y mocks de funciones.
+
+Fue necesario crear mocks de todas aquellas funciones que pertenecieran a Firebase, así como hacer uso de JS Dom para simular el entorno de un navegador.
+
+Al ser una introducción, por el momento creamos únicamente tres unitarios de la sección de registro de nuestra aplicación.
+
+![Vista Test Unitarios](src/images/unitTestResults.png)
 
 ## 7. Créditos y agradecimientos
 
