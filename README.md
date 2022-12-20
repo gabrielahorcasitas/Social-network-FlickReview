@@ -1,91 +1,95 @@
-# FlickReview - Una red social para quienes aman el cine
+# FlickReview -  A social network for those who love movies
 
-## Índice
+## Index
 
-* [1. Introducción](#1-introducción)
-* [2. Inspiración](#2-inspiración)
-* [3. Protipado](#3-prototipado)
-* [4. Versión final](#4-versión-final)
-* [5. Pruebas de usabilidad](#5-pruebas-de-usabilidad)
-* [6. Pruebas unitarias](#6-pruebas-unitarias)
-* [7. Créditos y agradecimientos](#7-créditos-y-agradecimientos)
+* [1. Introduction](#1-introduction)
+* [2. Inspiration](#2-inspiration)
+* [3. Prototypes](#3-prototypes)
+* [4. Final Version](#4-final-version)
+* [5. Usability Tests](#5-usability-tests)
+* [6. Unitary Tests](#6-unitary-tests)
+* [7. Credits and Acknowledgments](#7-credits-and-acknowledgments)
 
-## 1. Introducción
+## 1. Introduction
 
-FlickReview es una red social para quienes aman el cine, y no solo eso, sino también disfrutan de compartir con otras personas
-sus opiniones respecto a las películas que miran, sin importar de qué género sean, y poder mencionar libremente lo que disfrutaron
-y lo que no tanto.
+FlickReview is a social network for movie lovers who enjoy sharing with other people
+their opinions about the movies they watch, no matter what genre they are, freely mentioning what they enjoyed
+and what not so much.
 
-Esta aplicación surgió para poder compartir reseñas, críticas y comentarios sobre cortos y largometrajes a través 
-de publicaciones cortas e interactuar con ellas.
-
-
-## 2. Inspiración
-
-Adaptamos elementos que disfrutamos de otras redes sociales como la implementación de like de Facebook, 
-escribir sobre cine en un mismo sitio con distintos usuarios registrados como en Letterboxd y iCheckMovies, 
-y finalmente una vista de las publicaciones realizadas por los usuarios similar a Twitter.
-
-La paleta de colores que utilizamos en nuestra aplicación toma como referencia la sensación que evoca estar 
-en una sala de cine. Tonos vibrantes como el rosa y el azul que hacen juego con blancos y púrpuras. 
-
-![Paleta de colores de FlickReview](src/images/colorpalette.png)
+This application arose to be able to share reviews, criticisms and comments about movies through
+short posts and interact with others through them.
 
 
-## 3. Prototipado
+## 2. Inspiration
 
-Se llevaron a cabo prototipados de baja fidelidad en photoshop y alta fidelidad en figma para las secciones de inicio de sesión (log in), 
-registro (register) y página principal (home).
+We adapted elements that we enjoy from other social networks such as the implementation of Facebook's 'like',
+write about movies on the same site with different registered users such as Letterboxd and iCheckMovies,
+and finally a view of the posts made by users similar to Twitter.
 
-A continuación presentamos uno de los prototipos de baja fidelidad de la vista de inicio de sesión y posteriormente dos prototipos de alta fidelidad de la sección de registro y home respectivamente.
+The color palette that we use in our application, vibrant shades like pink and blue that go well with whites 
+and purples, takes as a reference the feeling that beingin a movie theater brings to life.
 
-![Prototipo de baja fidelidad de log in](src/images/PROTOTIPO_DE_BAJA_FIDELIDAD_Mesa_de_trabajo_1.jpg)
-
-![Prototipo de alta fidelidad de register](src/images/register.PNG)
-
-![Prototipo de alta fidelidad de home](src/images/prototipo_home.PNG.png)
+![FlickReview Color Palette](src/images/colorpalette.png)
 
 
-## 4. Versión final
+## 3. Prototypes
 
-Para la versión final de la aplicación, las vistas de login y register están disponibles para quienes accedan al sitio, 
-pero para poder realizar y visualizar las publicaciones de otros usuarios registrados es necesario crear una cuenta o iniciar sesión. 
+We did low fidelity prototyping in photoshop and high fidelity prototyping in figma for the login sections,
+registration (register) and main page (home).
 
-Se realizó el deploy a través de Firebase Hosting y se encuentra disponible [aquí](https://flickreview-labo.web.app/).
+Next, we present one of the low-fidelity prototypes of the login view and then two high-fidelity 
+prototypes of the register and home section respectively as examples.
 
-![Vista final de log in](src/images/finallogin.PNG)
+![Login low fidelity prototype](src/images/PROTOTIPO_DE_BAJA_FIDELIDAD_Mesa_de_trabajo_1.jpg)
 
-![Vista final de register](src/images/finalregister.PNG)
+![Register high fidelity prototype](src/images/register.PNG)
 
-![Vista final de home](src/images/finalhome.PNG)
+![Home high fidelity prototype](src/images/prototipo_home.PNG.png)
 
 
-## 5. Pruebas de usabilidad
+## 4. Final Version
 
-Durante diversas fases del desarrollo se llevaron a cabo pruebas de usabilidad con distintos grupos de usuarios. 
-La finalidad de la primera prueba fue conocer si el flujo de navegación para registrarse e iniciar sesión resultaba 
-intuitivo para alguien que no estaba familiarizado con la plataforma; también se implementaron los comentarios recibidos
-durante estas entrevistas para mejorar la experiencia de uso.
+In the final version of the application that has authentication, the login and register layouts are available to all those who access the site,
+but to be able to make and view the publications of other registered users it's necessary to create an account or log in.
 
-Después se realizaron pruebas para crear publicaciones una vez que el usuario ingresó. 
+Deployed via Firebase Hosting and available [here](https://flickreview-labo.web.app/).
 
-[Aquí](https://drive.google.com/drive/folders/1ITEjvpeOtdn4RiyqYyzLB0EfyTRORURy?usp=sharing) pueden consultarse los registros.
+![Final view Login](src/images/finallogin.PNG)
 
-## 6. Pruebas Unitarias
+![Final view Register](src/images/finalregister.PNG)
 
-En este proyecto nos introducimos al testeo a partir de la creación de data mocks y mocks de funciones.
+![Final view Home](src/images/finalhome.PNG)
 
-Fue necesario crear mocks de todas aquellas funciones que pertenecieran a Firebase, así como hacer uso de JS Dom para simular el entorno de un navegador.
 
-Al ser una introducción, por el momento creamos únicamente tres unitarios de la sección de registro de nuestra aplicación.
+## 5. Usability Tests
 
-![Vista Test Unitarios](src/images/unitTestResults.png)
+During various phases of development, usability tests were carried out with different groups of users.
 
-## 7. Créditos y agradecimientos
+The purpose of the first test was to find out if the navigation flow to register and login was
+intuitive for someone who was not familiar with the platform.
 
-Este proyecto fue realizado por Alexandra Álvarez, Fernanda Alvarez y Gabriela Horcasitas.
+The feedback received 
+during these interviews was used to improve the user experience.
 
-Gracias a lxs coaches y equipos que nos apoyaron, compartieron sus conocimientos y acompañaron durante este proceso. 
-Agradecemos especialmente a Julissa Rodriguez, quien nos direccionó e inspiró durante nuestros momentos de frustración. 
+Tests were then performed to create posts once the user logged in.
 
-También agradecemos a Michiberto, Mila, Lina, Aysa, Midi y Suavi por vigilarnos mientras trabajabamos para no perder la concentración.
+[Here](https://drive.google.com/drive/folders/1ITEjvpeOtdn4RiyqYyzLB0EfyTRORURy?usp=sharing) you can check the records.
+
+## 6. Unitary Tests
+
+In this project we introduce ourselves to testing through the creation of data mocks and function mocks.
+
+It was necessary to create mocks of all those functions that belonged to Firebase, as well as to make use of JSdom to simulate the environment of a browser.
+
+Being an introduction, we created only three unit tests of the registration section of our application.
+
+![View Unit Tests](src/images/unitTestResults.png)
+
+## 7. Credits and Acknowledgments
+
+This project was carried out by Alexandra Álvarez, Fernanda Álvarez and Gabriela Horcasitas.
+
+Thanks to the coaches and teams that supported us, shared their knowledge and accompanied us during this process.
+Special thanks to Julissa Rodriguez, who guided and inspired us during our frustrating moments.
+
+We also thank Michiberto, Mila, Lina, Aysa, Midi and Suavi for keeping an eye on us while we worked so we didn't lose concentration.
